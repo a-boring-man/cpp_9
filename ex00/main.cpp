@@ -15,6 +15,7 @@ int main(int ac, char **av) {
 			throw "can't open input file";
 		}
 		string line, tmp1, tmp2;
+		struct tm tm;
 		std::getline(file, line);
 		while (file.good())
 		{
@@ -27,19 +28,38 @@ int main(int ac, char **av) {
 			std::stringstream tmp_stream(line);
 			cerr << "buffer contain : ->" << line  << "<- ending here" << endl;
 			getline(tmp_stream, tmp1, '|');
+			if (trim(tmp1).length() <= 1)
+			{
+				cout << "Invalide format, string doesn't have character before '|', expected a float" << endl;
+				continue;
+			}
 			cerr << "tmp1 contain : ->" << tmp1  << "<- ending here" << endl;
+
+
+
 			getline(tmp_stream, tmp2, '|');
 			if (trim(tmp2).empty())
 			{
 				cout << "Invalide format, string doesn't have character after '|', expected a float" << endl;
 				continue;
 			}
-			double input_value = strtod(tmp2.c_str(), NULL);
-			if (!(input_value > 0 && input_value <= 1000))
+			if (!is_a_valid_double(trim(tmp2)))
 			{
-				cout << "Invalide for";
+				cout << "Invalide format, the right end side of the '|' character is not in a valide float format, expecting number from 0-9, '.', ',' only" << endl;
+				continue;
+			}
+			double input_value = strtod(tmp2.c_str(), NULL);
+			if (!(input_value >= 0 && input_value <= 1000))
+			{
+				cout.precision(17);
+				cout << "Invalide format, the float must be between 0 and 1000 included, found : => " << input_value << endl;
+				continue;
 			}
 			cerr << "tmp2 contain : ->" << tmp2 << "<- ending here" << endl;
+
+
+
+
 			string date = data1.get_the_closest_key(tmp1);
 
 			cout << trim(date) << " => " << trim(tmp2) << " = " << data1.get_the_value(date) * strtod(tmp2.c_str(), NULL) << endl;

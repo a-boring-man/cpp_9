@@ -6,7 +6,7 @@
 /*   By: jrinna <jrinna@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 10:53:40 by jrinna            #+#    #+#             */
-/*   Updated: 2023/04/28 10:03:44 by jrinna           ###   ########lyon.fr   */
+/*   Updated: 2023/04/28 11:57:42 by jrinna           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <fstream>
 # include <sstream>
 # include <cstdlib>
+# include <ctime>
 
 using std::map;
 using std::string;
@@ -53,6 +54,7 @@ class BitcoinExchange
 string ltrim(const string & s);
 string rtrim(const string & s);
 const string trim(const string & s);
+bool is_a_valid_double(const string & s);
 
 std::ostream &			operator<<( std::ostream & o, BitcoinExchange const & i );
 
