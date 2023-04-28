@@ -28,14 +28,20 @@ int main(int ac, char **av) {
 			std::stringstream tmp_stream(line);
 			cerr << "buffer contain : ->" << line  << "<- ending here" << endl;
 			getline(tmp_stream, tmp1, '|');
-			if (trim(tmp1).length() <= 1)
+			cerr << "test ->" << trim(tmp1) << "<-" << endl;
+			if (trim(tmp1).length() < 1)
 			{
-				cout << "Invalide format, string doesn't have character before '|', expected a float" << endl;
+				cout << "Invalide format, string doesn't have character before '|', expected a date" << endl;
 				continue;
 			}
 			cerr << "tmp1 contain : ->" << tmp1  << "<- ending here" << endl;
-
-
+			string first_part_clean = trim(tmp1.substr(0, tmp1.length() - 1));
+			cerr << "test trim clean string : ->" << first_part_clean <<  "<-"  << endl;
+			if (!strptime(first_part_clean.c_str(), "%Y-%m-%d", &tm))
+			{
+				cout << "Invalid format, date are in a wrong format, expected format is : year-month-days" << endl;
+				continue;
+			}
 
 			getline(tmp_stream, tmp2, '|');
 			if (trim(tmp2).empty())
@@ -66,6 +72,7 @@ int main(int ac, char **av) {
 			cerr << "buffer contain : ->" << line  << "<- ending here" << endl;
 			tmp1.clear();
 			tmp2.clear();
+			first_part_clean.clear();
 		}
 	}
 	catch(const std::exception& e)
