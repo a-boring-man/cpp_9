@@ -6,7 +6,7 @@
 /*   By: jrinna <jrinna@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 10:53:43 by jrinna            #+#    #+#             */
-/*   Updated: 2023/04/26 15:49:39 by jrinna           ###   ########lyon.fr   */
+/*   Updated: 2023/04/28 10:06:30 by jrinna           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,23 +88,26 @@ void BitcoinExchange::build_map(ifstream & file) {
 		cerr << "tmp1 contain : ->" << tmp1  << "<- ending here" << endl;
 		getline(tmp_stream, tmp2, ',');
 		cerr << "tmp2 contain : ->" << tmp2 << "<- ending here" << endl;
-		rate_table.insert(std::pair<string, double>(tmp1, strtod(tmp2.c_str(), NULL)));
+		rate_table.insert(std::pair<string, double>(trim(tmp1), strtod(tmp2.c_str(), NULL)));
 		cerr << "buffer contain : ->" << line  << "<- ending here" << endl;	
 	}
 	for (map<string, double>::iterator it = rate_table.begin(); it != rate_table.end(); it++) {
 		cerr << "->" << it->first << "<- : ->" << it->second << "<-" << endl;
 	}
+	if (rate_table.size() == 0){
+		throw "no data where found in the file/ folder";
+	}
 }
 
 double	BitcoinExchange::get_the_value(const string & key) {
-	map<string, double>::const_iterator it = rate_table.find(key);
+	map<string, double>::const_iterator it = rate_table.find(trim(key));
 	if (it != rate_table.end())
 		return it->second;
 	if (rate_table.size() == 1) {
 		return rate_table[0];
 	}
 	for (it = rate_table.begin(); it != rate_table.end(); it++) {
-		int cmp = it->first.compare(key);
+		int cmp = it->first.compare(trim(key));
 		if (cmp > 0) {
 			it--;
 			return it->second;
@@ -113,6 +116,37 @@ double	BitcoinExchange::get_the_value(const string & key) {
 	return rate_table.rbegin()->second;
 }
 
+
+const string &	BitcoinExchange::get_the_closest_key(const string & key) {
+	map<string, double>::const_iterator it = rate_table.find(trim(key));
+	if (it != rate_table.end())
+		return it->first;
+	if (rate_table.size() == 1) {
+		return rate_table.begin()->first;
+	}
+	for (it = rate_table.begin(); it != rate_table.end(); it++) {
+		int cmp = it->first.compare(trim(key));
+		if (cmp > 0) {
+			it--;
+			return it->first;
+		}
+	}
+	return rate_table.rbegin()->first;
+}
+
+string ltrim(const string & s) {
+	size_t start = s.find_first_not_of(' ');
+	return (start == string::npos) ? "" : s.substr(start);
+}
+
+string rtrim(const string & s) {
+	size_t end = s.find_last_not_of(' ');
+	return (end == string::npos) ? "" : s.substr(0, end + 1);
+}
+
+const string trim(const string & s) {
+	return rtrim(ltrim(s));
+}
 /*
 ** --------------------------------- ACCESSOR ---------------------------------
 */
