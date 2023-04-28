@@ -6,7 +6,7 @@
 /*   By: jrinna <jrinna@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 10:53:43 by jrinna            #+#    #+#             */
-/*   Updated: 2023/04/28 10:06:30 by jrinna           ###   ########lyon.fr   */
+/*   Updated: 2023/04/28 10:53:27 by jrinna           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,17 +83,17 @@ void BitcoinExchange::build_map(ifstream & file) {
 	{
 		std::getline(file, line);
 		std::stringstream tmp_stream(line);
-		cerr << "buffer contain : ->" << line  << "<- ending here" << endl;
+		//cerr << "buffer contain : ->" << line  << "<- ending here" << endl;
 		getline(tmp_stream, tmp1, ',');
-		cerr << "tmp1 contain : ->" << tmp1  << "<- ending here" << endl;
+		//cerr << "tmp1 contain : ->" << tmp1  << "<- ending here" << endl;
 		getline(tmp_stream, tmp2, ',');
-		cerr << "tmp2 contain : ->" << tmp2 << "<- ending here" << endl;
+		//cerr << "tmp2 contain : ->" << tmp2 << "<- ending here" << endl;
 		rate_table.insert(std::pair<string, double>(trim(tmp1), strtod(tmp2.c_str(), NULL)));
-		cerr << "buffer contain : ->" << line  << "<- ending here" << endl;	
+		//cerr << "buffer contain : ->" << line  << "<- ending here" << endl;	
 	}
-	for (map<string, double>::iterator it = rate_table.begin(); it != rate_table.end(); it++) {
-		cerr << "->" << it->first << "<- : ->" << it->second << "<-" << endl;
-	}
+	// for (map<string, double>::iterator it = rate_table.begin(); it != rate_table.end(); it++) {
+	// 	cerr << "->" << it->first << "<- : ->" << it->second << "<-" << endl;
+	// }
 	if (rate_table.size() == 0){
 		throw "no data where found in the file/ folder";
 	}
@@ -147,6 +147,24 @@ string rtrim(const string & s) {
 const string trim(const string & s) {
 	return rtrim(ltrim(s));
 }
+
+bool is_a_valid_double(const string & s) {
+	// finit state table 0-9 and .,
+	const int tbl[2][5] = {{1, 1, 3, 3, 3}, {2, 4, -1, -1, -1}};
+	int cs = 0;
+
+	for (size_t i = 0; cs > -1 && s.length() > i && s.at(i); i++)
+	{
+		if (s.at(i) >= '0' && s.at(i) <= '9')
+			cs = tbl[0][cs];
+		else if (s.at(i) == '.' || s.at(i) == ',')
+			cs = tbl[1][cs];
+		else
+			cs = -1;
+	}
+	return cs == 1 || cs == 3 || cs == 4;
+}
+
 /*
 ** --------------------------------- ACCESSOR ---------------------------------
 */

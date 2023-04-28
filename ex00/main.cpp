@@ -19,15 +19,33 @@ int main(int ac, char **av) {
 		while (file.good())
 		{
 			std::getline(file, line);
+			if (line.find('|') == string::npos)
+			{
+				cout << "Invalide format, string doesn't contain the '|' character" << endl;
+				continue;
+			}
 			std::stringstream tmp_stream(line);
 			cerr << "buffer contain : ->" << line  << "<- ending here" << endl;
 			getline(tmp_stream, tmp1, '|');
 			cerr << "tmp1 contain : ->" << tmp1  << "<- ending here" << endl;
-			getline(tmp_stream, tmp2, ',');
+			getline(tmp_stream, tmp2, '|');
+			if (trim(tmp2).empty())
+			{
+				cout << "Invalide format, string doesn't have character after '|', expected a float" << endl;
+				continue;
+			}
+			double input_value = strtod(tmp2.c_str(), NULL);
+			if (!(input_value > 0 && input_value <= 1000))
+			{
+				cout << "Invalide for";
+			}
 			cerr << "tmp2 contain : ->" << tmp2 << "<- ending here" << endl;
 			string date = data1.get_the_closest_key(tmp1);
+
 			cout << trim(date) << " => " << trim(tmp2) << " = " << data1.get_the_value(date) * strtod(tmp2.c_str(), NULL) << endl;
-			cerr << "buffer contain : ->" << line  << "<- ending here" << endl;	
+			cerr << "buffer contain : ->" << line  << "<- ending here" << endl;
+			tmp1.clear();
+			tmp2.clear();
 		}
 	}
 	catch(const std::exception& e)
