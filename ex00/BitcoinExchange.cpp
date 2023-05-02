@@ -6,7 +6,7 @@
 /*   By: jrinna <jrinna@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 10:53:43 by jrinna            #+#    #+#             */
-/*   Updated: 2023/04/28 10:53:27 by jrinna           ###   ########lyon.fr   */
+/*   Updated: 2023/05/02 13:00:06 by jrinna           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ BitcoinExchange::BitcoinExchange(const char * database) {
 	ifstream file(database);
 	if (!file.is_open())
 	{
-		cerr << "the database couldn't be open, please check the file right or location" << endl;
+		//cerr << "the database couldn't be open, please check the file right or location" << endl;
 		throw -1;
 	}
 	else {
@@ -85,17 +85,24 @@ void BitcoinExchange::build_map(ifstream & file) {
 		std::stringstream tmp_stream(line);
 		//cerr << "buffer contain : ->" << line  << "<- ending here" << endl;
 		getline(tmp_stream, tmp1, ',');
-		//cerr << "tmp1 contain : ->" << tmp1  << "<- ending here" << endl;
+		////cerr << "tmp1 contain : ->" << tmp1  << "<- ending here" << endl;
 		getline(tmp_stream, tmp2, ',');
-		//cerr << "tmp2 contain : ->" << tmp2 << "<- ending here" << endl;
-		rate_table.insert(std::pair<string, double>(trim(tmp1), strtod(tmp2.c_str(), NULL)));
-		//cerr << "buffer contain : ->" << line  << "<- ending here" << endl;	
+		////cerr << "tmp2 contain : ->" << tmp2 << "<- ending here" << endl;
+		if (!tmp1.empty())
+			rate_table.insert(std::pair<string, double>(trim(tmp1), strtod(tmp2.c_str(), NULL)));
+		////cerr << "buffer contain : ->" << line  << "<- ending here" << endl;	
 	}
 	// for (map<string, double>::iterator it = rate_table.begin(); it != rate_table.end(); it++) {
-	// 	cerr << "->" << it->first << "<- : ->" << it->second << "<-" << endl;
+	// 	//cerr << "->" << it->first << "<- : ->" << it->second << "<-" << endl;
 	// }
 	if (rate_table.size() == 0){
 		throw "no data where found in the file/ folder";
+	}
+}
+
+void	BitcoinExchange::display() const {
+	for (map<string, double>::const_iterator it = rate_table.begin(); it != rate_table.end(); it++){
+		//cerr << "->" << it->first << "<-" << endl;
 	}
 }
 
@@ -104,7 +111,7 @@ double	BitcoinExchange::get_the_value(const string & key) {
 	if (it != rate_table.end())
 		return it->second;
 	if (rate_table.size() == 1) {
-		return rate_table[0];
+		return rate_table.begin()->second;
 	}
 	for (it = rate_table.begin(); it != rate_table.end(); it++) {
 		int cmp = it->first.compare(trim(key));
@@ -124,8 +131,12 @@ const string &	BitcoinExchange::get_the_closest_key(const string & key) {
 	if (rate_table.size() == 1) {
 		return rate_table.begin()->first;
 	}
+	//cerr << "heu.... ->" << rate_table.begin()->first.compare(trim(key)) << "<-" << "key : ->" << key << "<-" << "begin : ->" << rate_table.begin()->first << "<-" << endl;
+	if (rate_table.begin()->first.compare(trim(key)) > 0)
+		return rate_table.begin()->first;
 	for (it = rate_table.begin(); it != rate_table.end(); it++) {
 		int cmp = it->first.compare(trim(key));
+		//cout << "comparing" << it->first << endl;
 		if (cmp > 0) {
 			it--;
 			return it->first;

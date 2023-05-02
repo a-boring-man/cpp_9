@@ -6,7 +6,7 @@
 /*   By: jrinna <jrinna@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 10:53:40 by jrinna            #+#    #+#             */
-/*   Updated: 2023/04/28 11:57:42 by jrinna           ###   ########lyon.fr   */
+/*   Updated: 2023/05/02 13:00:20 by jrinna           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ class BitcoinExchange
 
 		double get_the_value(const string & key);
 		const string & get_the_closest_key(const string & key);
-		
+		void	display() const;
+
 	private:
 
 		map<string, double>	rate_table;

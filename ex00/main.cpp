@@ -1,5 +1,11 @@
 #include "BitcoinExchange.hpp"
 
+bool check_date_is_correct(string & clean_date) {
+	if (clean_date.length() != 10)
+		return false;
+	return true;
+}
+
 bool first_part_check_is_ok(string first_half) {
 
 	// create the usefull string and struct
@@ -9,7 +15,7 @@ bool first_part_check_is_ok(string first_half) {
 
 	// clean the first part
 	trimed_first_half = trim(first_half);
-	cerr << "test ->" << trimed_first_half << "<-" << endl;
+	//cerr << "test ->" << trimed_first_half << "<-" << endl;
 
 	// test id the first half contain something other than the | caracter
 	if (trimed_first_half.length() < 1)
@@ -20,12 +26,12 @@ bool first_part_check_is_ok(string first_half) {
 
 	// create the clean first part containing only the date
 	first_part_clean = trim(trimed_first_half.substr(0, first_half.length() - 1));
-	cerr << "test trim clean string : ->" << first_part_clean <<  "<-"  << endl;
+	//cerr << "test trim clean string : ->" << first_part_clean <<  "<-"  << endl;
 	
 	// check if the date is correct
-	if (!strptime(first_part_clean.c_str(), "%Y-%m-%d", &tm))
+	if (!(strptime(first_part_clean.c_str(), "%Y-%m-%d", &tm) && check_date_is_correct(first_part_clean)))
 	{
-		cout << "Invalid format, date are in a wrong format, expected format is : year-month-days" << endl;
+		cout << "Invalid format, date are in a wrong format, expected format is : year-month-days with year > 1900 month and days must have 2 caracter" << endl;
 		return false;
 	}
 	return true;
@@ -42,9 +48,9 @@ bool second_part_check_is_ok(string second_half) {
 	//create the data needed
 	string trimed_second_half;
 
-	cerr << "second_half contain : ->" << second_half << "<- ending here" << endl;
+	//cerr << "second_half contain : ->" << second_half << "<- ending here" << endl;
 	trimed_second_half = trim(second_half);
-	cerr << "trimed second_half contain : ->" << trimed_second_half << "<- ending here" << endl;
+	//cerr << "trimed second_half contain : ->" << trimed_second_half << "<- ending here" << endl;
 
 	// check if the second half contain something
 	if (trimed_second_half.empty())
@@ -74,7 +80,7 @@ bool second_part_check_is_ok(string second_half) {
 }
 
 double return_second_half(string second_half) {
-	cerr << "second half ->" << second_half.c_str() << "<-" << endl;
+	//cerr << "second half ->" << second_half.c_str() << "<-" << endl;
 	return strtod(second_half.c_str(), NULL);
 }
 
@@ -88,7 +94,7 @@ int main(int ac, char **av) {
 	{
 		// get the data in the specified file
 		BitcoinExchange data1("data.csv");
-
+		data1.display();
 		// try to open the input file
 		ifstream file(av[1]);
 		if (!file.is_open()) {
@@ -106,7 +112,7 @@ int main(int ac, char **av) {
 		{
 			// get the line
 			std::getline(file, line);
-			cerr << "buffer contain : ->" << line  << "<- ending here" << endl;
+			//cerr << "buffer contain : ->" << line  << "<- ending here" << endl;
 
 			//if the line doesn't contain a | caractere
 			if (line.find('|') == string::npos)
@@ -117,7 +123,7 @@ int main(int ac, char **av) {
 
 			// prepare a stream to split the line
 			std::stringstream tmp_stream(line);
-			cerr << "buffer contain : ->" << line  << "<- ending here" << endl;
+			//cerr << "buffer contain : ->" << line  << "<- ending here" << endl;
 			// split the line into two part on the | caractere putting the first half in first_half
 			string first_half;
 			getline(tmp_stream, first_half, '|');
@@ -137,7 +143,7 @@ int main(int ac, char **av) {
 	}
 	catch(const std::exception& e)
 	{
-		std::cerr << e.what() << '\n';
+		cerr << e.what() << '\n';
 	}
 	
 }
