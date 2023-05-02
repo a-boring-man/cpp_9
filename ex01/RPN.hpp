@@ -4,12 +4,14 @@
 # include <iostream>
 # include <string>
 # include <stack>
+# include <cstdlib>
 
 using std::stack;
 using std::string;
 using std::cout;
 using std::cerr;
 using std::endl;
+using std::atof;
 
 class RPN
 {
@@ -22,7 +24,7 @@ class RPN
 
 		RPN &		operator=( RPN const & rhs );
 
-		int			getResult() const;
+		double			getResult() const;
 		void		calculate(const string & s);
 
 	private:
@@ -31,8 +33,8 @@ class RPN
 		bool		is_in_charset(char c, const string & charset) const;
 		int			count_signe(const string & s) const;
 		int			count_nbr(const string & s) const;
-		stack<char> order;
-		int			result;
+		stack<double> order;
+		double		result;
 
 };
 
