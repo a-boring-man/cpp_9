@@ -3,6 +3,8 @@
 bool check_date_is_correct(string & clean_date) {
 	if (clean_date.length() != 10)
 		return false;
+	if (!(clean_date[4] == '-' && clean_date[6] == '-'))
+		return false;
 	return true;
 }
 

@@ -6,7 +6,7 @@
 /*   By: jrinna <jrinna@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 10:53:43 by jrinna            #+#    #+#             */
-/*   Updated: 2023/05/02 13:00:06 by jrinna           ###   ########lyon.fr   */
+/*   Updated: 2023/05/02 17:34:12 by jrinna           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,15 +85,15 @@ void BitcoinExchange::build_map(ifstream & file) {
 		std::stringstream tmp_stream(line);
 		//cerr << "buffer contain : ->" << line  << "<- ending here" << endl;
 		getline(tmp_stream, tmp1, ',');
-		////cerr << "tmp1 contain : ->" << tmp1  << "<- ending here" << endl;
+		//cerr << "tmp1 contain : ->" << tmp1  << "<- ending here" << endl;
 		getline(tmp_stream, tmp2, ',');
-		////cerr << "tmp2 contain : ->" << tmp2 << "<- ending here" << endl;
+		//cerr << "tmp2 contain : ->" << tmp2 << "<- ending here" << endl;
 		if (!tmp1.empty())
 			rate_table.insert(std::pair<string, double>(trim(tmp1), strtod(tmp2.c_str(), NULL)));
-		////cerr << "buffer contain : ->" << line  << "<- ending here" << endl;	
+		//cerr << "buffer contain : ->" << line  << "<- ending here" << endl;	
 	}
 	// for (map<string, double>::iterator it = rate_table.begin(); it != rate_table.end(); it++) {
-	// 	//cerr << "->" << it->first << "<- : ->" << it->second << "<-" << endl;
+	// 		cerr << "->" << it->first << "<- : ->" << it->second << "<-" << endl;
 	// }
 	if (rate_table.size() == 0){
 		throw "no data where found in the file/ folder";
