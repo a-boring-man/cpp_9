@@ -1,15 +1,11 @@
 #include "BitcoinExchange.hpp"
 
-bool first_part_check_is_ok(std::stringstream & s) {
+bool first_part_check_is_ok(string first_half) {
 
 	// create the usefull string and struct
-	string first_half;
 	string trimed_first_half;
 	string first_part_clean;
 	struct tm tm;
-
-	// split the line into two part on the | caractere putting the first half in first_half
-	getline(s, first_half, '|');
 
 	// clean the first part
 	trimed_first_half = trim(first_half);
@@ -35,23 +31,17 @@ bool first_part_check_is_ok(std::stringstream & s) {
 	return true;
 }
 
-string return_first_part(std::stringstream & s) {
+string return_first_part(string first_half) {
 
-	string first_half;
-	string first_part_clean;
-	getline(s, first_half, '|');
-	cerr << "returning ->" << trim(trim(first_half).substr(0, first_half.length() - 1)) << "<-" << endl;
+	//cerr << "j'ai : " << s << "returning ->" << trim(trim(first_half).substr(0, first_half.length() - 1)) << "<-" << endl;
 	return trim(trim(first_half).substr(0, first_half.length() - 1));
 }
 
-bool second_part_check_is_ok(std::stringstream & s) {
+bool second_part_check_is_ok(string second_half) {
 
 	//create the data needed
-	string second_half;
 	string trimed_second_half;
 
-	// get the second half of the string
-	getline(s, second_half, '|');
 	cerr << "second_half contain : ->" << second_half << "<- ending here" << endl;
 	trimed_second_half = trim(second_half);
 	cerr << "trimed second_half contain : ->" << trimed_second_half << "<- ending here" << endl;
@@ -83,9 +73,8 @@ bool second_part_check_is_ok(std::stringstream & s) {
 	return true;
 }
 
-double return_second_half(std::stringstream & s) {
-	string second_half;
-	getline(s, second_half, '|');
+double return_second_half(string second_half) {
+	cerr << "second half ->" << second_half.c_str() << "<-" << endl;
 	return strtod(second_half.c_str(), NULL);
 }
 
@@ -129,15 +118,21 @@ int main(int ac, char **av) {
 			// prepare a stream to split the line
 			std::stringstream tmp_stream(line);
 			cerr << "buffer contain : ->" << line  << "<- ending here" << endl;
+			// split the line into two part on the | caractere putting the first half in first_half
+			string first_half;
+			getline(tmp_stream, first_half, '|');
+			string second_half;
+			getline(tmp_stream, second_half, '|');
 
-			if (!first_part_check_is_ok(tmp_stream))
+			if (!first_part_check_is_ok(first_half))
 				continue;
-			if (!second_part_check_is_ok(tmp_stream))
+			if (!second_part_check_is_ok(second_half))
 				continue;
 
-			string date = data1.get_the_closest_key(return_first_part(tmp_stream));
+			//cerr << "return first half : ->" << return_first_part(first_half) << "<-" << endl;
+			string date = data1.get_the_closest_key(return_first_part(first_half));
 
-			cout << trim(date) << " => " << return_second_half(tmp_stream) << " = " << data1.get_the_value(date) * return_second_half(tmp_stream) << endl;
+			cout << trim(date) << " => " << return_second_half(second_half) << " = " << data1.get_the_value(date) * return_second_half(second_half) << endl;
 		}
 	}
 	catch(const std::exception& e)
