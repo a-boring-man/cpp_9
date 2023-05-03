@@ -46,7 +46,7 @@ void	PmergeMe::sort_vec(unsigned int minimum_size, vector<unsigned int> & vec) {
 	{
 		vector<unsigned int> left(vec.begin(), vec.begin() + vec.size() / 2);
 		vector<unsigned int> right(vec.begin() + vec.size() / 2, vec.end());
-		cout << "left size : " << left.size() << "right size : " << right.size() << endl;
+		//cout << "left size : " << left.size() << "right size : " << right.size() << endl;
 		sort_vec(minimum_size, left);
 		sort_vec(minimum_size, right);
 		merge_vec(left, right, vec);
@@ -70,12 +70,21 @@ void	PmergeMe::merge_vec(const vector<unsigned int> & left, const vector<unsigne
 		}
 		itresult++;
 	}
-	if (itl != left.end()) {
+	while (itl != left.end()) {
 		*itresult = *itl;
+		itresult++;
+		itl++;
 	}
-	else if (itr != right.end()) {
+	while (itr != right.end()) {
 		*itresult = *itr;
+		itresult++;
+		itr++;
 	}
+	// cout << "try ->" << endl;
+	// for (vector<unsigned int>::iterator it = result.begin(); it != result.end(); it++) {
+	// 	cout << *it << ", ";
+	// }
+	// cout << endl;
 }
 
 void 	PmergeMe::insertion_sort_vec(vector<unsigned int> & vec) {
