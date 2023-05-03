@@ -28,6 +28,7 @@ class PmergeMe
 
 		void	sort_vec(unsigned int minimum_size, vector<unsigned int> & vec);
 		void	sort_list(unsigned int minimum_size);
+		void	merge_vec(const vector<unsigned int> & left, const vector<unsigned int> & right, vector<unsigned int> & result);
 
 	private:
 

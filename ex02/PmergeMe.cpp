@@ -49,10 +49,49 @@ void	PmergeMe::sort_vec(unsigned int minimum_size, vector<unsigned int> & vec) {
 		cout << "left size : " << left.size() << "right size : " << right.size() << endl;
 		sort_vec(minimum_size, left);
 		sort_vec(minimum_size, right);
+		merge_vec(left, right, vec);
+	}
+	insertion_sort_vec(vec);
+}
+
+void	PmergeMe::merge_vec(const vector<unsigned int> & left, const vector<unsigned int> & right, vector<unsigned int> & result) {
+	vector<unsigned int>::const_iterator itl = left.begin();
+	vector<unsigned int>::const_iterator itr = right.begin();
+	vector<unsigned int>::iterator itresult = result.begin();
+	while (itl != left.end() && itr != right.end())
+	{
+		if (*itl <= *itr) {
+			*itresult = *itl;
+			itl++;
+		}
+		else {
+			*itresult = *itr;
+			itr++;
+		}
+		itresult++;
+	}
+	if (itl != left.end()) {
+		*itresult = *itl;
+	}
+	else if (itr != right.end()) {
+		*itresult = *itr;
+	}
+}
+
+void 	PmergeMe::insertion_sort_vec(vector<unsigned int> & vec) {
+	unsigned long size = vec.size();
+	for (unsigned long i = 0; i < size; i++)
+	{
+		unsigned long j = i;
+		while (j > 0 && vec[j - 1] > vec[i])
+		{
+			vec[j - 1] = vec[j - 1] ^ vec[i];
+			vec[i] = vec[j - 1] ^ vec[i];
+			vec[j - 1] = vec[j - 1] ^ vec[i];
+		}
 	}
 	
 }
-
 
 /*
 ** --------------------------------- ACCESSOR ---------------------------------
