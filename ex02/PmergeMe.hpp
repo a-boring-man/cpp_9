@@ -6,6 +6,7 @@
 # include <vector>
 # include <list>
 # include <cstdlib>
+# include <time.h>
 
 using std::cout;
 using std::cerr;
@@ -27,6 +28,8 @@ class PmergeMe
 
 		const vector<unsigned int> & getVec() const;
 		const list<unsigned int> & getLst() const;
+		vector<unsigned int> & get_modif_vec();
+		list<unsigned int> & get_modif_lst();
 
 		void	sort_vec(unsigned int minimum_size, vector<unsigned int> & vec);
 		void	sort_list(unsigned int minimum_size, list<unsigned int> & lst);

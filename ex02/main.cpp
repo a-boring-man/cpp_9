@@ -17,68 +17,69 @@ bool is_correct_charset(const char*av, const char*set) {
 }
 
 int main (int ac, char **av) {
+
 	PmergeMe me;
+
 	if (ac <= 1)
 	{
 		cout << "the program must have at least one argument" << endl;
 		return 1;
 	}
+
+	// parsing
+	cout << "beginning of parsing" << endl;
+	clock_t	start, end;
+	double cpu_time_used;
+	start = clock();
 	for (int i = 1; i < ac; i++)
 	{
 		if (!is_correct_charset(av[i], "0123456789"))
 		{
 			cout << "one argument isn't a positif interger" << endl;
+			return 1;
 		}
 		if (is_correct_charset(av[i], "0123456789"))
 			me.add(std::atoi(av[i]));
 	}
-	
-	// vector<unsigned int> titi;
-	// list<unsigned int> toto;
-	// titi.push_back(4);
-	// titi.push_back(7);
-	// titi.push_back(5);
-	// titi.push_back(6);
-	// titi.push_back(12342);
-	// titi.push_back(554);
-	// titi.push_back(65);
-	// titi.push_back(322);
-	// titi.push_back(1);
-	// titi.push_back(000);
-	// titi.push_back(224434343);
-	// titi.push_back(545);
-	// titi.push_back(33);
-	// titi.push_back(3);
-	// toto.push_back(4);
-	// toto.push_back(7);
-	// toto.push_back(5);
-	// toto.push_back(6);
-	// toto.push_back(12342);
-	// toto.push_back(554);
-	// toto.push_back(65);
-	// toto.push_back(322);
-	// toto.push_back(1);
-	// toto.push_back(000);
-	// toto.push_back(224434343);
-	// toto.push_back(545);
-	// toto.push_back(33);
-	// toto.push_back(3);
-	// cout << "avant : " << endl;
-	// for (vector<unsigned int>::iterator it = titi.begin(); it != titi.end(); it++) {
-	// 	cout << *it << ", ";
-	// }
-	// cout << "avant : " << endl;
-	// for (list<unsigned int>::iterator it = toto.begin(); it != toto.end(); it++) {
-	// 	cout << *it << ", ";
-	// }
-	// me.sort_vec(1, titi);
-	// me.sort_list(1, toto);
-	// cout << "apres : " << endl;
-	// for (vector<unsigned int>::iterator it = titi.begin(); it != titi.end(); it++) {
-	// 	cout << *it << ", ";
-	// }
-	// cout << "apres : " << endl;
-	// for (list<unsigned int>::iterator it = toto.begin(); it != toto.end(); it++) {
-	// 	cout << *it << ", ";
-	// }
+	end = clock();
+	cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+	cout << "time passing parsing : " << cpu_time_used << " second without even trying" << endl;
+
+	// display before sort
+	cout << "before sorting vec : ->";
+	for (vector<unsigned int>::const_iterator it = me.getVec().begin(); it != me.getVec().end(); it++) {
+		cout << *it << ", ";
+	}
+	cout << endl;
+	cout << "before sorting list : ->";
+	for (list<unsigned int>::const_iterator it = me.getLst().begin(); it != me.getLst().end(); it++) {
+		cout << *it << ", ";
+	}
+	cout << endl;
+
+	// vec
+	cout << "sorting vec ..." << endl;
+	start = clock();
+	me.sort_vec(1, me.get_modif_vec());
+	end = clock();
+	cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+	cout << "after sorting vec : ->";
+	for (vector<unsigned int>::const_iterator it = me.getVec().begin(); it != me.getVec().end(); it++) {
+		cout << *it << ", ";
+	}
+	cout << endl;
+	cout << "sorting done in : " << cpu_time_used << " second, without even trying" << endl;
+
+	// list
+	cout << "sorting lst ..." << endl;
+	start = clock();
+	me.sort_list(1, me.get_modif_lst());
+	end = clock();
+	cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+	cout << "after sorting list : ->";
+	for (list<unsigned int>::const_iterator it = me.getLst().begin(); it != me.getLst().end(); it++) {
+		cout << *it << ", ";
+	}
+	cout << endl;
+	cout << "sort in : " << cpu_time_used << " second, while running multiple firefox tab" << endl;
 }

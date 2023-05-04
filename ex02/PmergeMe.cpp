@@ -130,11 +130,11 @@ void	PmergeMe::merge_list(const list<unsigned int> & left, const list<unsigned i
 		advance(itresult, 1);
 		advance(itr, 1);
 	}
-	cout << "try ->" << endl;
-	for (list<unsigned int>::iterator it = result.begin(); it != result.end(); it++) {
-		cout << *it << ", ";
-	}
-	cout << endl;
+	//cout << "try ->" << endl;
+	// for (list<unsigned int>::iterator it = result.begin(); it != result.end(); it++) {
+	// 	cout << *it << ", ";
+	// }
+	// cout << endl;
 }
 
 void 	PmergeMe::insertion_sort_vec(vector<unsigned int> & vec) {
@@ -180,6 +180,14 @@ const vector<unsigned int> & PmergeMe::getVec() const {
 }
 
 const list<unsigned int> & PmergeMe::getLst() const {
+	return lst;
+}
+
+vector<unsigned int> & PmergeMe::get_modif_vec() {
+	return vec;
+}
+
+list<unsigned int> & PmergeMe::get_modif_lst() {
 	return lst;
 }
 
