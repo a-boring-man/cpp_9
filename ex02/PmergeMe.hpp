@@ -5,12 +5,14 @@
 # include <string>
 # include <vector>
 # include <list>
+# include <cstdlib>
 
 using std::cout;
 using std::cerr;
 using std::endl;
 using std::vector;
 using std::list;
+using std::advance;
 
 class PmergeMe
 {
@@ -27,8 +29,8 @@ class PmergeMe
 		const list<unsigned int> & getLst() const;
 
 		void	sort_vec(unsigned int minimum_size, vector<unsigned int> & vec);
-		void	sort_list(unsigned int minimum_size);
-		void	merge_vec(const vector<unsigned int> & left, const vector<unsigned int> & right, vector<unsigned int> & result);
+		void	sort_list(unsigned int minimum_size, list<unsigned int> & lst);
+		void	add(unsigned int i);
 
 	private:
 
@@ -36,6 +38,9 @@ class PmergeMe
 		list<unsigned int>		lst;
 
 		void	insertion_sort_vec(vector<unsigned int> & vec);
+		void	insertion_sort_lst(list<unsigned int> & lst);
+		void	merge_vec(const vector<unsigned int> & left, const vector<unsigned int> & right, vector<unsigned int> & result);
+		void	merge_list(const list<unsigned int> & left, const list<unsigned int> & right, list<unsigned int> & result);
 };
 
 #endif /* ******************************************************** PMERGEME_H */

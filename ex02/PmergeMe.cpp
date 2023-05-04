@@ -41,6 +41,23 @@ PmergeMe &				PmergeMe::operator=( PmergeMe const & rhs )
 ** --------------------------------- METHODS ----------------------------------
 */
 
+void	PmergeMe::sort_list(unsigned int minimum_size, list<unsigned int> & lst) {
+	unsigned long size = lst.size();
+	if (size > minimum_size && size > 1)
+	{
+		list<unsigned int>::iterator middle_it = lst.begin();
+		advance(middle_it, size / 2);
+		
+		list<unsigned int> left(lst.begin(), middle_it);
+		list<unsigned int> right(middle_it, lst.end());
+		//cout << "left size : " << left.size() << "right size : " << right.size() << endl;
+		sort_list(minimum_size, left);
+		sort_list(minimum_size, right);
+		merge_list(left, right, lst);
+	}
+	insertion_sort_lst(lst);
+}
+
 void	PmergeMe::sort_vec(unsigned int minimum_size, vector<unsigned int> & vec) {
 	if (vec.size() > minimum_size && vec.size() > 1)
 	{
@@ -87,6 +104,39 @@ void	PmergeMe::merge_vec(const vector<unsigned int> & left, const vector<unsigne
 	// cout << endl;
 }
 
+void	PmergeMe::merge_list(const list<unsigned int> & left, const list<unsigned int> & right, list<unsigned int> & result) {
+	list<unsigned int>::const_iterator itl = left.begin();
+	list<unsigned int>::const_iterator itr = right.begin();
+	list<unsigned int>::iterator itresult = result.begin();
+	while (itl != left.end() && itr != right.end())
+	{
+		if (*itl <= *itr) {
+			*itresult = *itl;
+			advance(itl, 1);
+		}
+		else {
+			*itresult = *itr;
+			advance(itr, 1);
+		}
+		itresult++;
+	}
+	while (itl != left.end()) {
+		*itresult = *itl;
+		advance(itresult, 1);
+		advance(itl, 1);
+	}
+	while (itr != right.end()) {
+		*itresult = *itr;
+		advance(itresult, 1);
+		advance(itr, 1);
+	}
+	cout << "try ->" << endl;
+	for (list<unsigned int>::iterator it = result.begin(); it != result.end(); it++) {
+		cout << *it << ", ";
+	}
+	cout << endl;
+}
+
 void 	PmergeMe::insertion_sort_vec(vector<unsigned int> & vec) {
 	unsigned long size = vec.size();
 	for (unsigned long i = 0; i < size; i++)
@@ -99,8 +149,27 @@ void 	PmergeMe::insertion_sort_vec(vector<unsigned int> & vec) {
 			vec[j - 1] = vec[j - 1] ^ vec[i];
 		}
 	}
-	
 }
+
+void	PmergeMe::insertion_sort_lst(list<unsigned int> & lst) {
+	list<unsigned int>::iterator end = lst.end();
+	list<unsigned int>::iterator begin = lst.begin();
+	for (list<unsigned int>::iterator it = begin; it != end; it++) {
+		list<unsigned int>::iterator before = it;
+		while (before-- != begin && *before > *it)
+		{
+			*before = *before ^ *it;
+			*it = *before ^ *it;
+			*before = *before ^ *it;
+		}
+	}
+}
+
+void	PmergeMe::add(unsigned int i) {
+	vec.push_back(i);
+	lst.push_back(i);
+}
+
 
 /*
 ** --------------------------------- ACCESSOR ---------------------------------
