@@ -91,6 +91,7 @@ int main(int ac, char **av) {
 	// check if correct number of arguement
 	if (ac != 2) {
 		cout << "this program must take exactly one argument witch is the name of the input file that must be to the format : " << endl << endl << "date | value" << endl << endl << " where date is in a \"Year-Month-Day\" format and value must be either a float or a positive interger between 0 and 1000 included, ps the first line is ignore" << endl;
+		return 1;
 	}
 	try
 	{
@@ -142,7 +143,10 @@ int main(int ac, char **av) {
 			//cerr << "return first half : ->" << return_first_part(first_half) << "<-" << endl;
 			string date = data1.get_the_closest_key(return_first_part(first_half));
 
-			cout << trim(date) << " => " << return_second_half(second_half) << " = " << data1.get_the_value(date) * return_second_half(second_half) << endl;
+			if (tmp_stream.good())
+				cout << "nice try but i can't accept other format than date | value and nothing else after" << endl;
+			else
+				cout << trim(date) << " => " << return_second_half(second_half) << " = " << data1.get_the_value(date) * return_second_half(second_half) << endl;
 		}
 	}
 	catch(char const* s)
