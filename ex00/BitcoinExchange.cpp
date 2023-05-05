@@ -6,7 +6,7 @@
 /*   By: jrinna <jrinna@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 10:53:43 by jrinna            #+#    #+#             */
-/*   Updated: 2023/05/02 17:34:12 by jrinna           ###   ########lyon.fr   */
+/*   Updated: 2023/05/05 10:09:53 by jrinna           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ BitcoinExchange::BitcoinExchange(const char * database) {
 	if (!file.is_open())
 	{
 		//cerr << "the database couldn't be open, please check the file right or location" << endl;
-		throw -1;
+		throw "error opening file";
 	}
 	else {
 		this->build_map(file);

@@ -145,9 +145,9 @@ int main(int ac, char **av) {
 			cout << trim(date) << " => " << return_second_half(second_half) << " = " << data1.get_the_value(date) * return_second_half(second_half) << endl;
 		}
 	}
-	catch(const std::exception& e)
+	catch(char const* s)
 	{
-		cerr << e.what() << '\n';
+		cerr << s << endl;
 	}
 	
 }

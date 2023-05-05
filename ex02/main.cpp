@@ -43,7 +43,7 @@ int main (int ac, char **av) {
 	}
 	end = clock();
 	cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-	cout << "time passing parsing : " << cpu_time_used << " second without even trying" << endl;
+	cout << "time passing parsing : " << cpu_time_used << " second without even trying" << endl << endl;
 
 	// display before sort
 	cout << "before sorting vec : ->";
@@ -55,7 +55,7 @@ int main (int ac, char **av) {
 	for (list<unsigned int>::const_iterator it = me.getLst().begin(); it != me.getLst().end(); it++) {
 		cout << *it << ", ";
 	}
-	cout << endl;
+	cout << endl << endl;
 
 	// vec
 	cout << "sorting vec ..." << endl;
@@ -68,7 +68,7 @@ int main (int ac, char **av) {
 		cout << *it << ", ";
 	}
 	cout << endl;
-	cout << "sorting done in : " << cpu_time_used << " second, without even trying" << endl;
+	cout << "sorting done in : " << cpu_time_used << " second, without even trying" << endl << endl;
 
 	// list
 	cout << "sorting lst ..." << endl;
@@ -81,5 +81,5 @@ int main (int ac, char **av) {
 		cout << *it << ", ";
 	}
 	cout << endl;
-	cout << "sort in : " << cpu_time_used << " second, while running multiple firefox tab" << endl;
+	cout << "sort in : " << cpu_time_used << " second, while running multiple firefox tab" << endl << endl;
 }
