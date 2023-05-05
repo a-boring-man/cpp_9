@@ -11,10 +11,11 @@ int main(int ac, char **av) {
 	{
 		rpn.calculate(string(av[1]));
 	}
-	catch(const std::exception& e)
+	catch(char const* s)
 	{
 		cout << "ERROR" << endl;
-		std::cerr << e.what() << '\n';
+		cout << s << endl;
+		return 1;
 	}
 	cout << rpn.getResult() << endl;
 }

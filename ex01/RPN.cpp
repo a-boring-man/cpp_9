@@ -125,11 +125,11 @@ void	RPN::calculate(const string & s) {
 		}
 		else if (is_in_charset(s[i], "0123456789"))
 			order.push(s[i] - '0');
-		cerr << "inter resolut = " << result << endl;
+		//cerr << "inter resolut = " << result << endl;
 	}
 	if (order.size() == 1)
 		result = order.top();
-	cerr << result << endl;
+	//cerr << result << endl;
 }
 
 /*
