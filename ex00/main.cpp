@@ -145,6 +145,8 @@ int main(int ac, char **av) {
 
 			if (tmp_stream.good())
 				cout << "nice try but i can't accept other format than date | value and nothing else after" << endl;
+			else if (date == "false")
+				cout << "the bitcoin didn't existed back then sorry i can't say how much : " << return_second_half(second_half) << " was worth" << endl;
 			else
 				cout << trim(date) << " => " << return_second_half(second_half) << " = " << data1.get_the_value(date) * return_second_half(second_half) << endl;
 		}

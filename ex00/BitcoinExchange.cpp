@@ -6,7 +6,7 @@
 /*   By: jrinna <jrinna@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 10:53:43 by jrinna            #+#    #+#             */
-/*   Updated: 2023/05/05 13:16:30 by jrinna           ###   ########lyon.fr   */
+/*   Updated: 2023/05/05 17:37:09 by jrinna           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ const string &	BitcoinExchange::get_the_closest_key(const string & key) {
 	}
 	//cerr << "heu.... ->" << rate_table.begin()->first.compare(trim(key)) << "<-" << "key : ->" << key << "<-" << "begin : ->" << rate_table.begin()->first << "<-" << endl;
 	if (rate_table.begin()->first.compare(trim(key)) > 0)
-		return rate_table.begin()->first;
+		return string("false");
 	for (it = rate_table.begin(); it != rate_table.end(); it++) {
 		int cmp = it->first.compare(trim(key));
 		//cout << "comparing" << it->first << endl;
