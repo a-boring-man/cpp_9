@@ -12,10 +12,10 @@ bool first_part_check_is_ok(string first_half) {
 
 	// create the usefull string and struct
 	string trimed_first_half;
-	string first_part_clean;
 	struct tm tm;
 
 	// clean the first part
+	//cerr << "first half ->" << first_half << "<-" << endl;
 	trimed_first_half = trim(first_half);
 	//cerr << "test ->" << trimed_first_half << "<-" << endl;
 
@@ -27,11 +27,11 @@ bool first_part_check_is_ok(string first_half) {
 	}
 
 	// create the clean first part containing only the date
-	first_part_clean = trim(trimed_first_half.substr(0, first_half.length() - 1));
-	//cerr << "test trim clean string : ->" << first_part_clean <<  "<-"  << endl;
+	// first_part_clean = trim(trimed_first_half.substr(0, first_half.length() - 1));
+	// cerr << "test trim clean string : ->" << first_part_clean <<  "<-"  << endl;
 	
 	// check if the date is correct
-	if (!(strptime(first_part_clean.c_str(), "%Y-%m-%d", &tm) && check_date_is_correct(first_part_clean)))
+	if (!(strptime(trimed_first_half.c_str(), "%Y-%m-%d", &tm) && check_date_is_correct(trimed_first_half)))
 	{
 		cout << "Invalid format, date are in a wrong format, expected format is : year-month-days with year > 1900 month and days must have 2 caracter" << endl;
 		return false;
@@ -42,7 +42,7 @@ bool first_part_check_is_ok(string first_half) {
 string return_first_part(string first_half) {
 
 	//cerr << "j'ai : " << s << "returning ->" << trim(trim(first_half).substr(0, first_half.length() - 1)) << "<-" << endl;
-	return trim(trim(first_half).substr(0, first_half.length() - 1));
+	return trim(first_half);
 }
 
 bool second_part_check_is_ok(string second_half) {
@@ -129,8 +129,10 @@ int main(int ac, char **av) {
 			// split the line into two part on the | caractere putting the first half in first_half
 			string first_half;
 			getline(tmp_stream, first_half, '|');
+			//cerr << "first first_half ->" << first_half << "<-" << endl;
 			string second_half;
 			getline(tmp_stream, second_half, '|');
+			//cerr << "first second_half ->" << second_half << "<-" << endl;
 
 			if (!first_part_check_is_ok(first_half))
 				continue;
