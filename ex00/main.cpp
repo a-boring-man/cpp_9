@@ -69,7 +69,7 @@ bool second_part_check_is_ok(string second_half) {
 	}
 
 	// convert the string into a double
-	double input_value = strtod(second_half.c_str(), NULL);
+	double input_value = atof(second_half.c_str());
 
 	// check if the double is in the correct boundary
 	if (!(input_value >= 0 && input_value <= 1000))
@@ -83,7 +83,7 @@ bool second_part_check_is_ok(string second_half) {
 
 double return_second_half(string second_half) {
 	//cerr << "second half ->" << second_half.c_str() << "<-" << endl;
-	return strtod(second_half.c_str(), NULL);
+	return atof(second_half.c_str());
 }
 
 int main(int ac, char **av) {

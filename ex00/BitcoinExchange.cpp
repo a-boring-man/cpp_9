@@ -6,7 +6,7 @@
 /*   By: jrinna <jrinna@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 10:53:43 by jrinna            #+#    #+#             */
-/*   Updated: 2023/05/05 10:09:53 by jrinna           ###   ########lyon.fr   */
+/*   Updated: 2023/05/05 13:16:30 by jrinna           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void BitcoinExchange::build_map(ifstream & file) {
 		getline(tmp_stream, tmp2, ',');
 		//cerr << "tmp2 contain : ->" << tmp2 << "<- ending here" << endl;
 		if (!tmp1.empty())
-			rate_table.insert(std::pair<string, double>(trim(tmp1), strtod(tmp2.c_str(), NULL)));
+			rate_table.insert(std::pair<string, double>(trim(tmp1), atof(tmp2.c_str())));
 		//cerr << "buffer contain : ->" << line  << "<- ending here" << endl;	
 	}
 	// for (map<string, double>::iterator it = rate_table.begin(); it != rate_table.end(); it++) {
