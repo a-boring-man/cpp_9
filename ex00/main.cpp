@@ -142,6 +142,7 @@ int main(int ac, char **av) {
 
 			//cerr << "return first half : ->" << return_first_part(first_half) << "<-" << endl;
 			string date = data1.get_the_closest_key(return_first_part(first_half));
+			//cerr << "date : ->" << date << endl;
 
 			if (tmp_stream.good())
 				cout << "nice try but i can't accept other format than date | value and nothing else after" << endl;

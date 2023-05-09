@@ -6,7 +6,7 @@
 /*   By: jrinna <jrinna@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 10:53:43 by jrinna            #+#    #+#             */
-/*   Updated: 2023/05/05 17:37:09 by jrinna           ###   ########lyon.fr   */
+/*   Updated: 2023/05/09 09:54:20 by jrinna           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ double	BitcoinExchange::get_the_value(const string & key) {
 
 const string &	BitcoinExchange::get_the_closest_key(const string & key) {
 	map<string, double>::const_iterator it = rate_table.find(trim(key));
+	static const string false_str = "false";
 	if (it != rate_table.end())
 		return it->first;
 	if (rate_table.size() == 1) {
@@ -133,7 +134,7 @@ const string &	BitcoinExchange::get_the_closest_key(const string & key) {
 	}
 	//cerr << "heu.... ->" << rate_table.begin()->first.compare(trim(key)) << "<-" << "key : ->" << key << "<-" << "begin : ->" << rate_table.begin()->first << "<-" << endl;
 	if (rate_table.begin()->first.compare(trim(key)) > 0)
-		return string("false");
+		return false_str;
 	for (it = rate_table.begin(); it != rate_table.end(); it++) {
 		int cmp = it->first.compare(trim(key));
 		//cout << "comparing" << it->first << endl;
